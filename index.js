@@ -10,6 +10,7 @@ const contenedor = document.querySelector("#contenedor-productos")
 function crearUnBoton(nombre, texto, funcionQueEjecuta) {
     nombre = document.createElement("button");
     nombre.innerText = texto;
+    nombre.classList.add("botonesOpciones");
     const botonProducto = document.getElementById("opciones");
     botonProducto.appendChild(nombre);
     nombre.addEventListener("click", funcionQueEjecuta);
@@ -69,10 +70,9 @@ function mostrarProductosPorCategoria(activarComparativa, categoriaEspecifica) {
             productosAMostrar.forEach((producto) => {
                 const div = document.createElement("div")
                 div.innerHTML = `
+            <img src="${producto.image}">
             <h2>${producto.title}</h2>
             <h3>${producto.category}</h3>
-            <p>${producto.description}</p>
-            <img src="${producto.image}">
             <p>Precio: $${producto.price}</p>
             <div id="producto-${producto.id}">
             </div>
@@ -94,10 +94,9 @@ function verCarrito() {
         const div = document.createElement("div");
 
         div.innerHTML = `
+        <img src="${p.image}">
         <h2>${p.title}</h2>
         <h3>${p.category}</h3>
-        <p>${p.description}</p>
-        <img src="${p.image}">
         <p>Precio: $${p.price}</p>
         <div id="producto-${p.id}">
         </div>
@@ -166,3 +165,22 @@ function botonesParaElCarrito(nombreButton, texto) {
     return nombreButton
 }
 
+//Css
+
+//nav
+const botonesPresionados = Array.from(document.querySelectorAll(".botonesOpciones"));
+let botonActivo = null;
+
+botonesPresionados.forEach((botonPresionado)=>{
+    botonPresionado.addEventListener("click", ()=>{
+        //quito la clase activo para que deje de resaltar el boton
+        if (botonActivo){
+            botonActivo.classList.remove("active");
+        }   
+
+        botonPresionado.classList.toggle("active");
+
+        //actualizo la variable botonActivo para verificar 
+        botonActivo = botonPresionado;
+    })
+})
